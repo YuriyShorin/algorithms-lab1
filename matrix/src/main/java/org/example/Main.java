@@ -7,12 +7,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Excel excel = new Excel();
         excel.create();
-        int rows = 8192, columns = 8192, numberOfTests = 100, excelRowIndex = 14;
-        while (rows > 1){
+        int rows = 2, columns = 8192, numberOfTests = 10000, excelRowIndex = 2;
+        while (rows  <= 8912){
             checkMethods(rows, columns, numberOfTests, excel, "First", excelRowIndex);
             checkMethods(rows, columns, numberOfTests, excel, "Second", excelRowIndex+16);
-            excelRowIndex--;
-            rows = rows/2;
+            excelRowIndex++;
+            rows = rows * 2;
         }
         excel.createGraph("The first type of generation", 6, 2, 16, 25, 2, 14, 0, true);
         excel.createGraph("The second type of generation", 6, 27, 16, 50, 18, 30, 0, true);
@@ -39,6 +39,7 @@ private static void checkMethods(int rows, int columns, int numberOfTests, Excel
             start = System.nanoTime();
             matrix.ladderSearch();
             ladderTimes.add(System.nanoTime() - start);
+            start = System.nanoTime();
             matrix.ladderExpSearch();
             expTimes.add(System.nanoTime() - start);
         }
