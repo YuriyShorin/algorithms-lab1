@@ -14,11 +14,13 @@ public class Main {
             excelRowIndex--;
             rows = rows/2;
         }
-        excel.createGraph("The first type of generation", 6, 2, 16, 25, 2, 14, 0);
-        excel.createGraph("The second type of generation", 6, 27, 16, 50, 18, 30, 0);
+        excel.createGraph("The first type of generation", 6, 2, 16, 25, 2, 14, 0, true);
+        excel.createGraph("The second type of generation", 6, 27, 16, 50, 18, 30, 0, true);
+        excel.createRatio();
+        excel.createGraph("The ratio of two generation types", 6, 52, 16, 75, 34, 46, 0, false);
     }
 
-    private static void checkMethods(int rows, int columns, int numberOfTests, Excel excel, String generationWay, int excelRowIndex) throws IOException {
+private static void checkMethods(int rows, int columns, int numberOfTests, Excel excel, String generationWay, int excelRowIndex) throws IOException {
         ArrayList<Long> binaryTimes = new ArrayList<>();
         ArrayList<Long> ladderTimes = new ArrayList<>();
         ArrayList<Long> expTimes = new ArrayList<>();
