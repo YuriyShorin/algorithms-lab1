@@ -46,72 +46,56 @@ public class Matrix {
     }
 
     public boolean ladderExpSearch(){
-        int line = 0, column = columns - 1;
-        while (column > -1){
-            if(matrix[line][column] == key){
+        int row = 0, column = columns - 1;
+        while (row < rows){
+            if(matrix[row][column] == key){
                 return true;
             }
-            else if(matrix[line][column] > key){
-                    column--;
-            } else{
-                int finish = 1;
-                while ((line + finish < rows) && (matrix[line + finish][column] < key)){
-                    finish = finish * 2;
+            else if(matrix[row][column] > key){
+                int start = 1;
+                while ((column - start > -1) && (matrix[row][column - start] > key)){
+                    start = start * 2;
                 }
-                int start = line + finish/2;
-                if(line + finish >= rows){
-                    finish = rows - 1;
-                } else {
-                    finish += line;
-                }
+                int finish = column - start/2;
+                start = Math.max(column - start, 0);
                 if(start == finish){
                     return false;
                 }
-                while (start < finish){
-                    int middle = (start+finish)/2;
-                    if(matrix[middle][column] == key){
-                        return true;
-                    }
-                    if(matrix[middle][column] > key){
-                        finish = middle - 1;
-                    } else{
-                        start = middle + 1;
-                    }
+                column = binSearch(row, start, finish);
+                if(matrix[row][column] == key){
+                    return true;
                 }
-                line = start;
+            } else{
+                row++;
             }
         }
         return false;
     }
-
-
-
 
 
     public boolean binarySearch(){
         for(int i = 0; i < rows; ++i){
-            int result = binSearch(i, columns-1);
-            if(result != -1){
+            int result = binSearch(i, 0,columns-1);
+            if(matrix[i][result] == key){
                 return true;
             }
         }
         return false;
     }
 
-    private int binSearch(int row, int right){
-        int left = 0;
-        while (left <= right){
-            int middle = (left+right)/2;
+    private int binSearch(int row, int start, int finish){
+        while (start <= finish){
+            int middle = (start+finish)/2;
             if(matrix[row][middle] == key){
                 return middle;
             }
             if(matrix[row][middle] > key){
-                right = middle - 1;
+                finish = middle - 1;
             } else{
-                left = middle + 1;
+                start = middle + 1;
             }
         }
-        return -1;
+        return finish;
     }
 
     public void print(){
